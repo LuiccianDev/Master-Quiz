@@ -51,8 +51,6 @@
     }
     
     /* Asegurar que el layout principal ocupe al menos toda la altura de la ventana */
-    
-    }
 
     h1 {
         @apply font-bold text-4xl md:text-5xl bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent mb-6;
@@ -62,11 +60,6 @@
         @apply text-base leading-relaxed text-White/90 max-w-3xl mx-auto;
     }
 
-    a {
-        @apply text-LightBlue transition-all duration-300 hover:text-Orange font-medium 
-               border-b-2 border-transparent hover:border-Orange/50 pb-1;
-    }
-    
     /* Button styles */
     .btn {
         @apply px-6 py-2.5 rounded-lg font-medium transition-all duration-300 
@@ -93,8 +86,8 @@
                placeholder-Slate/70 focus:outline-none focus:ring-2 focus:ring-Orange/50 
                transition-all duration-200;
     }
-} 
 
+}
 /* 
 Agraga nuevas fuentes
 @font-face {
