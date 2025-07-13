@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+    --color-mint-500: oklch(0.72 0.11 178);
+    --color-navi : rgb(11, 25, 44); /* Navi */
+    --color-Blue : rgb(30, 62, 98);
+    --color-Orange : rgb(255, 101, 0);
+    --color-Black : rgb(0, 0, 0);
+
+
+    --font-script: Great Vibes, cursive;
+    
+}
+@layer base {
+    body {
+        @apply bg-white text-white;
+    }
+
+    h1 {
+        @apply font-bold text-Orange;
+    }
+
+    p {
+        @apply text-base leading-relaxed text-navi;
+    }
+
+    a {
+        @apply text-navi transition-colors duration-300;
+    }
+}
+
+/* 
+Agraga nuevas fuentes
+@font-face {
+    font-family: 'Great Vibes';
+    src: url('/fonts/GreatVibes-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+} */
