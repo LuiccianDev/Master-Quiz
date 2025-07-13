@@ -1,0 +1,194 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const quizzes = await getCollection('quizzes');
+  return quizzes.map(quiz => ({
+    params: { slug: quiz.slug },
+    props: { quiz },
+  }));
+}
+
+const { quiz } = Astro.props;
+const questions = quiz.data.questions.slice(0, 60);
+---
+
+<BaseLayout 
+  title={`Quiz de ${quiz.data.title}`}
+  className="bg-gradient-to-br from-navi/95 to-navi/90"
+>
+    <main class="max-w-2xl mx-auto py-8 px-4">
+        <h1 class="text-3xl font-bold mb-6 text-center text-White">{`Quiz de ${quiz.data.title}`}</h1>
+        <form id="quiz-form" class="space-y-8">
+        <div id="questions-container" class="space-y-6">
+            {
+            questions.map((q, idx) => (
+                <fieldset
+                class="bg-navi/50 backdrop-blur-sm rounded-xl p-6 border border-white/10 quiz-question"
+                style="display: none;"
+                >
+                <legend class="font-semibold mb-4 text-White text-lg">
+                    <span class="text-Orange font-bold">{idx + 1}.</span> {q.question}
+                </legend>
+                <div class="flex flex-col gap-3 mt-4">
+                    {q.options.map((opt, optIdx) => (
+                    <label class="flex items-center gap-3 p-3 rounded-lg bg-navi/30 hover:bg-White/5 transition-colors cursor-pointer">
+                        <input
+                        type="radio"
+                        name={`question-${idx}`}
+                        value={optIdx}
+                        class="h-5 w-5 text-Orange focus:ring-Orange border-2 border-White/20 rounded-full checked:bg-Orange checked:border-Orange"
+                        required
+                        />
+                        <span class="text-White/90">{opt}</span>
+                    </label>
+                    ))}
+                </div>
+                </fieldset>
+            ))
+                }
+            </div>
+
+        <div id="quiz-navigation" class="flex justify-between items-center mt-8 p-4 bg-navi/50 backdrop-blur-sm rounded-xl border border-white/10">
+            <button
+            type="button"
+            id="prev-btn"
+            class="py-2 px-6 bg-navi/80 text-White font-bold rounded-lg hover:bg-White/10 transition-all duration-300 border border-White/20 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
+            >
+            ← Anterior
+            </button>
+            
+            <span id="page-indicator" class="text-sm text-White/70"></span>
+            
+            <button
+            type="button"
+            id="next-btn"
+            class="py-2 px-6 bg-gradient-to-r from-Orange to-Accent text-White font-bold rounded-lg hover:from-Orange/90 hover:to-Accent/90 transition-all duration-300 shadow-lg hover:shadow-Orange/30"
+            >
+            Siguiente →
+            </button>
+        </div>
+
+        <button
+            type="submit"
+            id="submit-btn"
+            class="w-full mt-4 py-3 bg-gradient-to-r from-Orange to-Accent text-White font-bold rounded-lg hover:from-Orange/90 hover:to-Accent/90 transition-all duration-300 shadow-lg hover:shadow-Orange/30"
+            style="display: none;"
+        >
+            Enviar respuestas
+        </button>
+        </form>
+
+        <div id="result" class="mt-8 p-6 bg-navi/50 backdrop-blur-sm rounded-xl border border-White/10 text-center" style="display: none;">
+        <h2 class="text-2xl font-bold text-White mb-4">¡Quiz Completado!</h2>
+        <p class="text-White/90 text-lg">Tu puntuación:</p>
+        <p id="score-display" class="text-4xl font-bold bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent my-4">0/0</p>
+        <p id="score-message" class="text-White/70"></p>
+        <a href="/dashboard" class="inline-block mt-6 px-6 py-2 bg-gradient-to-r from-Orange to-Accent text-White font-medium rounded-lg hover:from-Orange/90 hover:to-Accent/90 transition-all duration-300">
+          Volver al Dashboard
+        </a>
+      </div>
+    </main>
+</BaseLayout>
+
+<script define:vars={{ questions }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const questionsPerPage = 5;
+    let currentPage = 0;
+    const totalQuestions = questions.length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    const form = document.getElementById("quiz-form");
+    const questionElements = Array.from(form.querySelectorAll(".quiz-question"));
+
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const submitBtn = document.getElementById("submit-btn");
+    const pageIndicator = document.getElementById("page-indicator");
+
+    const resultDiv = document.getElementById("result");
+    const resultText = resultDiv.querySelector("p");
+
+    function updateView() {
+      const startIndex = currentPage * questionsPerPage;
+      const endIndex = startIndex + questionsPerPage;
+
+      questionElements.forEach((el, index) => {
+        el.style.display =
+          index >= startIndex && index < endIndex ? "block" : "none";
+      });
+
+      prevBtn.style.display = currentPage === 0 ? "none" : "inline-block";
+      nextBtn.style.display =
+        currentPage === totalPages - 1 ? "none" : "inline-block";
+      submitBtn.style.display =
+        currentPage === totalPages - 1 ? "inline-block" : "none";
+
+      if (pageIndicator) {
+        pageIndicator.textContent = `Página ${currentPage + 1} de ${totalPages}`;
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        updateView();
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 0) {
+        currentPage--;
+        updateView();
+      }
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      let score = 0;
+      let answeredCount = 0;
+
+      questions.forEach((q, idx) => {
+        const userAnswerStr = formData.get(`question-${idx}`);
+        if (userAnswerStr !== null) {
+          answeredCount++;
+          const userAnswer = parseInt(userAnswerStr, 10);
+          if (userAnswer === q.answer) {
+            score++;
+          }
+        }
+      });
+
+      if (answeredCount < totalQuestions) {
+        alert("Por favor, responde todas las preguntas antes de enviar.");
+        return;
+      }
+
+      const scoreDisplay = document.getElementById("score-display");
+      const scoreMessage = document.getElementById("score-message");
+      
+      scoreDisplay.textContent = `${score} de ${totalQuestions}`;
+      
+      const percentage = Math.round((score / totalQuestions) * 100);
+      if (percentage >= 80) {
+        scoreMessage.textContent = `¡Excelente trabajo! Has obtenido un ${percentage}% de respuestas correctas.`;
+      } else if (percentage >= 60) {
+        scoreMessage.textContent = `Buen trabajo. Has obtenido un ${percentage}% de respuestas correctas.`;
+      } else {
+        scoreMessage.textContent = `Sigue practicando. Has obtenido un ${percentage}% de respuestas correctas.`;
+      }
+      
+      resultDiv.style.display = "block";
+      document.getElementById("quiz-navigation").style.display = "none";
+      submitBtn.style.display = "none";
+      
+      // Desplazamiento suave al resultado
+      resultDiv.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    updateView();
+  });
+</script>

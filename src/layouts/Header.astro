@@ -1,0 +1,93 @@
+---
+---
+<header class="bg-navi/80 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50 shadow-lg">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0 flex items-center">
+        <a href="/" class="flex items-center group">
+          <span class="text-2xl font-bold bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent">
+            QuizMaster
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-1">
+        <a 
+          href="/courses" 
+          class="px-4 py-2 text-sm font-medium text-White/90 hover:text-Orange transition-colors duration-200 rounded-lg hover:bg-white/5"
+        >
+          Cursos
+        </a>
+        <a 
+          href="/dashboard" 
+          class="px-4 py-2 text-sm font-medium text-White/90 hover:text-Orange transition-colors duration-200 rounded-lg hover:bg-white/5"
+        >
+          Dashboard
+        </a>
+        <a 
+          href="/profile" 
+          class="px-4 py-2 text-sm font-medium text-White/90 hover:text-Orange transition-colors duration-200 rounded-lg hover:bg-white/5"
+        >
+          Perfil
+        </a>
+        <a 
+          href="/login" 
+          class="ml-4 px-4 py-2 text-sm font-medium text-White bg-Orange/90 hover:bg-Orange rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-Orange/20"
+        >
+          Iniciar Sesión
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden flex items-center">
+        <button 
+          type="button" 
+          class="inline-flex items-center justify-center p-2 rounded-md text-White/80 hover:text-White hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-Orange"
+          aria-controls="mobile-menu" 
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <!-- Menu icon -->
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu, show/hide based on menu state -->
+  <div class="md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      <a href="/courses/course" class="block px-3 py-2 rounded-md text-base font-medium text-White/90 hover:bg-white/5 hover:text-Orange">Cursos</a>
+      <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-White/90 hover:bg-white/5 hover:text-Orange">Dashboard</a>
+      <a href="/profile" class="block px-3 py-2 rounded-md text-base font-medium text-White/90 hover:bg-white/5 hover:text-Orange">Perfil</a>
+      <a href="/login" class="block px-3 py-2 rounded-md text-base font-medium text-White bg-Orange/90 hover:bg-Orange">Iniciar Sesión</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (!mobileMenuButton) {
+        console.warn('Mobile menu button not found');
+        return;
+      }
+      
+      if (!mobileMenu) {
+        console.warn('Mobile menu element not found');
+        return;
+      }
+
+    mobileMenuButton?.addEventListener('click', () => {
+      const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+      mobileMenuButton.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu.classList.toggle('hidden', expanded);
+    });
+  });
+</script>

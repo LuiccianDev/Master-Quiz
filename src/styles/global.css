@@ -3,33 +3,97 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-    --color-mint-500: oklch(0.72 0.11 178);
-    --color-navi : rgb(11, 25, 44); /* Navi */
-    --color-Blue : rgb(30, 62, 98);
-    --color-Orange : rgb(255, 101, 0);
-    --color-Black : rgb(0, 0, 0);
-
+    /* Modern color palette */
+    --color-navi: #0f172a;         /* Deep space blue - primary color */
+    --color-Blue: #3b82f6;         /* Vibrant blue - primary action */
+    --color-Orange: #f97316;       /* Warm orange - highlights and accents */
+    --color-Black: #0f172a;        /* Deep dark blue-black */
+    
+    /* Extended palette */
+    --color-White: #f8fafc;        /* Pure white */
+    --color-Slate: #64748b;        /* Muted slate for secondary text */
+    --color-LightBlue: #60a5fa;    /* Lighter blue for hover states */
+    --color-Accent: #f59e0b;       /* Golden accent for special elements */
+    --color-Success: #10b981;      /* Success green */
+    --color-Error: #ef4444;        /* Error red */
 
     --font-script: Great Vibes, cursive;
     
 }
+
+.animate-blob {
+  animation: blob 15s infinite ease-in-out;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
 @layer base {
+    :root {
+        --tw-bg-opacity: 1;
+        --tw-text-opacity: 1;
+    }
+    
+    body, html {
+        @apply h-full m-0 p-0;
+    }
+    
     body {
-        @apply bg-white text-white;
+        @apply bg-gradient-to-br from-navi/95 to-navi/80 text-White min-h-screen w-full;
+        background-attachment: fixed;
+        position: relative;
+        overflow-x: hidden;
+    }
+    
+    /* Asegurar que el layout principal ocupe al menos toda la altura de la ventana */
+    
     }
 
     h1 {
-        @apply font-bold text-Orange;
+        @apply font-bold text-4xl md:text-5xl bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent mb-6;
     }
 
     p {
-        @apply text-base leading-relaxed text-navi;
+        @apply text-base leading-relaxed text-White/90 max-w-3xl mx-auto;
     }
 
     a {
-        @apply text-navi transition-colors duration-300;
+        @apply text-LightBlue transition-all duration-300 hover:text-Orange font-medium 
+               border-b-2 border-transparent hover:border-Orange/50 pb-1;
     }
-}
+    
+    /* Button styles */
+    .btn {
+        @apply px-6 py-2.5 rounded-lg font-medium transition-all duration-300 
+               transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Orange;
+    }
+    
+    .btn-primary {
+        @apply bg-gradient-to-r from-Orange to-Accent text-White shadow-lg hover:shadow-Orange/30;
+    }
+    
+    .btn-secondary {
+        @apply bg-Blue/10 text-LightBlue border border-Blue/20 hover:bg-Blue/20;
+    }
+    
+    /* Card styles */
+    .card {
+        @apply bg-navi/50 backdrop-blur-sm rounded-xl p-6 shadow-xl border border-white/10 
+               transition-all duration-300 hover:shadow-2xl hover:shadow-Orange/10;
+    }
+    
+    /* Form elements */
+    input, textarea, select {
+        @apply bg-navi/30 border border-white/10 rounded-lg px-4 py-2.5 text-White 
+               placeholder-Slate/70 focus:outline-none focus:ring-2 focus:ring-Orange/50 
+               transition-all duration-200;
+    }
+} 
 
 /* 
 Agraga nuevas fuentes

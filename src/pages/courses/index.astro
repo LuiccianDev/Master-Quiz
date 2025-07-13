@@ -1,0 +1,251 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const cursos = await getCollection('courses');
+
+const getNivelColor = (nivel : string | undefined) => {
+  switch(nivel) {
+    case 'Básico': return 'bg-LightBlue/10 text-LightBlue border border-LightBlue/20';
+    case 'Intermedio': return 'bg-Orange/10 text-Orange border border-Orange/20';
+    case 'Avanzado': return 'bg-Accent/10 text-Accent border border-Accent/20';
+    default: return 'bg-Slate/10 text-Slate border border-white/10';
+  }
+};
+---
+
+<BaseLayout title="Cursos Disponibles">
+  <main class="min-h-screen bg-gradient-to-br from-navi/95 to-navi/90 py-12">
+    <!-- Header Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-White mb-4">
+          Cursos Disponibles
+        </h1>
+        <p class="text-xl text-White/70 max-w-3xl mx-auto">
+          Explora nuestra colección de cursos especializados. Cada curso incluye quizzes interactivos 
+          para poner a prueba tus conocimientos y mejorar tu aprendizaje.
+        </p>
+      </div>
+
+      <!-- Stats Section -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-navi/50 backdrop-blur-sm rounded-xl p-6 text-center border border-white/10 hover:shadow-2xl hover:shadow-Orange/10 transition-all duration-300">
+          <div class="text-3xl font-bold text-LightBlue mb-2">{cursos.length}</div>
+          <div class="text-White/70">Cursos Disponibles</div>
+        </div>
+        <div class="bg-navi/50 backdrop-blur-sm rounded-xl p-6 text-center border border-white/10 hover:shadow-2xl hover:shadow-Orange/10 transition-all duration-300">
+          <div class="text-3xl font-bold text-Orange mb-2">
+            {cursos.reduce((total, curso) => total + curso.data.quizzes, 0)}
+          </div>
+          <div class="text-White/70">Quizzes Totales</div>
+        </div>
+        <div class="bg-navi/50 backdrop-blur-sm rounded-xl p-6 text-center border border-white/10 hover:shadow-2xl hover:shadow-Orange/10 transition-all duration-300">
+          <div class="text-3xl font-bold text-Accent mb-2">3</div>
+          <div class="text-White/70">Niveles de Dificultad</div>
+        </div>
+      </div>
+
+      <!-- Courses Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {cursos.map((curso) => (
+          <div class="bg-navi/50 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden hover:shadow-2xl hover:shadow-Orange/10 transition-all duration-300 group">
+            <!-- Course Image/Icon -->
+            <div class={`h-48 ${curso.data.color} flex items-center justify-center relative overflow-hidden`}>
+              <div class="absolute inset-0 bg-gradient-to-br from-transparent to-black/20"></div>
+              <div class="text-white text-6xl font-bold opacity-20 group-hover:opacity-30 transition-opacity">
+                {curso.data.title.charAt(0)}
+              </div>
+              <div class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
+                <span class="text-white text-sm font-medium">{curso.data.quizzes} quizzes</span>
+              </div>
+            </div>
+
+            <!-- Course Content -->
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-xl font-bold text-Primary">{curso.data.title}</h3>
+                <span class={`px-2 py-1 rounded-full text-xs font-medium ${getNivelColor(curso.data.nivel)}`}>
+                  {curso.data.nivel}
+                </span>
+              </div>
+              
+              <p class="text-Secondary/70 mb-4 text-sm leading-relaxed">
+                {curso.data.description}
+              </p>
+
+              <div class="flex items-center text-sm text-White/70 mb-4 space-x-4">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  {curso.data.duracion}
+                </div>
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                  </svg>
+                  {curso.data.tema}
+                </div>
+              </div>
+
+              <a 
+                href={`/courses/${curso.slug}`}
+                class="block w-full bg-gradient-to-r from-Orange to-Accent text-White text-center py-3 px-4 rounded-lg hover:from-Orange/90 hover:to-Accent/90 transition-all duration-300 font-medium shadow-lg hover:shadow-Orange/30"
+              >
+                Comenzar Curso
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Filter Section (Optional Enhancement) -->
+      <div class="bg-navi/50 backdrop-blur-sm rounded-xl p-6 mb-8 border border-white/10">
+        <h3 class="text-lg font-bold text-White mb-4">Filtrar por Nivel</h3>
+        <div class="flex flex-wrap gap-3">
+          <button class="filter-btn px-5 py-2.5 bg-gradient-to-r from-Slate/20 to-Slate/10 text-White rounded-xl hover:from-Slate/30 hover:to-Slate/20 transition-all duration-300 border border-White/10 hover:border-White/30 shadow-md hover:shadow-Slate/30" data-level="todos">
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
+              </svg>
+              Todos los Niveles
+            </span>
+          </button>
+          <button class="filter-btn px-5 py-2.5 bg-gradient-to-r from-LightBlue/20 to-LightBlue/10 text-LightBlue rounded-xl hover:from-LightBlue/30 hover:to-LightBlue/20 transition-all duration-300 border border-LightBlue/20 hover:border-LightBlue/40 shadow-md hover:shadow-LightBlue/30" data-level="Básico">
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              Básico
+            </span>
+          </button>
+          <button class="filter-btn px-5 py-2.5 bg-gradient-to-r from-Orange/20 to-Orange/10 text-Orange rounded-xl hover:from-Orange/30 hover:to-Orange/20 transition-all duration-300 border border-Orange/20 hover:border-Orange/40 shadow-md hover:shadow-Orange/30" data-level="Intermedio">
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              Intermedio
+            </span>
+          </button>
+          <button class="filter-btn px-5 py-2.5 bg-gradient-to-r from-Accent/20 to-Accent/10 text-Accent rounded-xl hover:from-Accent/30 hover:to-Accent/20 transition-all duration-300 border border-Accent/20 hover:border-Accent/40 shadow-md hover:shadow-Accent/30" data-level="Avanzado">
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              Avanzado
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="text-center">
+        <a 
+          href="/" 
+          class="inline-flex items-center px-6 py-3 border border-White/20 rounded-md text-White bg-navi/50 hover:bg-White/10 transition-colors duration-300"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Volver al inicio
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  // Add interactive filtering functionality with type checking
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      const filterButtons = document.querySelectorAll('button[class*="bg-"]');
+      const courseCards = document.querySelectorAll('.grid .bg-white.rounded-xl');
+      
+      // Validate that elements exist
+      if (!filterButtons.length || !courseCards.length) {
+        console.warn('Filter buttons or course cards not found');
+        return;
+      }
+      
+      filterButtons.forEach((button, index) => {
+        // Type check: ensure button is an HTMLElement
+        if (!(button instanceof HTMLElement)) {
+          console.warn(`Button at index ${index} is not an HTMLElement`);
+          return;
+        }
+        
+        button.addEventListener('click', (event) => {
+          try {
+            event.preventDefault();
+            
+            // Remove active state from all buttons
+            filterButtons.forEach(btn => {
+              if (btn instanceof HTMLElement) {
+                btn.classList.remove('ring-2', 'ring-offset-2', 'ring-blue-500');
+              }
+            });
+            
+            // Add active state to clicked button
+            button.classList.add('ring-2', 'ring-offset-2', 'ring-blue-500');
+            
+            // Get filter text with null checking
+            const filterText = button.textContent?.trim() || '';
+            
+            if (!filterText) {
+              console.warn('Filter text is empty');
+              return;
+            }
+            
+            // Show/hide courses based on filter
+            courseCards.forEach((card, cardIndex) => {
+              if (!(card instanceof HTMLElement)) {
+                console.warn(`Card at index ${cardIndex} is not an HTMLElement`);
+                return;
+              }
+              
+              try {
+                if (filterText === 'Todos') {
+                  card.style.display = 'block';
+                } else {
+                  // More specific selector for the level badge
+                  const levelBadge = card.querySelector('span.px-2.py-1.rounded-full');
+                  
+                  if (levelBadge && levelBadge.textContent) {
+                    const badgeText = levelBadge.textContent.trim();
+                    
+                    if (badgeText === filterText) {
+                      card.style.display = 'block';
+                    } else {
+                      card.style.display = 'none';
+                    }
+                  } else {
+                    // If no level badge found, hide the card
+                    card.style.display = 'none';
+                  }
+                }
+              } catch (cardError) {
+                console.error(`Error processing card at index ${cardIndex}:`, cardError);
+              }
+            });
+            
+          } catch (buttonError) {
+            console.error('Error in button click handler:', buttonError);
+          }
+        });
+      });
+      
+      // Set initial active state for "Todos" button
+      const todosButton = Array.from(filterButtons).find(btn => 
+        btn.textContent?.trim() === 'Todos'
+      );
+      
+      if (todosButton instanceof HTMLElement) {
+        todosButton.classList.add('ring-2', 'ring-offset-2', 'ring-blue-500');
+      }
+      
+    } catch (error) {
+      console.error('Error initializing course filter:', error);
+    }
+  });
+</script>
