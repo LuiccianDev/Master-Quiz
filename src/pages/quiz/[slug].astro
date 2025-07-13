@@ -115,26 +115,40 @@ const questions = quiz.data.questions.slice(0, 60);
       const startIndex = currentPage * questionsPerPage;
       const endIndex = startIndex + questionsPerPage;
 
-      questionElements.forEach((el, index) => {
-        el.style.display =
-          index >= startIndex && index < endIndex ? "block" : "none";
+      // Hide all questions first
+      questionElements.forEach(el => {
+        el.style.display = "none";
       });
 
-      prevBtn.style.display = currentPage === 0 ? "none" : "inline-block";
-      nextBtn.style.display =
-        currentPage === totalPages - 1 ? "none" : "inline-block";
-      submitBtn.style.display =
-        currentPage === totalPages - 1 ? "inline-block" : "none";
-
-      if (pageIndicator) {
-        pageIndicator.textContent = `Página ${currentPage + 1} de ${totalPages}`;
+      // Show only questions for current page
+      for (let i = startIndex; i < endIndex && i < questionElements.length; i++) {
+        questionElements[i].style.display = "block";
       }
+
+      // Update navigation buttons
+      prevBtn.style.display = currentPage === 0 ? "none" : "inline-block";
+      nextBtn.style.display = currentPage === totalPages - 1 ? "none" : "inline-block";
+      submitBtn.style.display = currentPage === totalPages - 1 ? "inline-block" : "none";
+
+      // Update page indicator
+      if (pageIndicator) {
+        pageIndicator.textContent = `Pregunta ${startIndex + 1}-${Math.min(endIndex, totalQuestions)} de ${totalQuestions}`;
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     nextBtn.addEventListener("click", () => {
       if (currentPage < totalPages - 1) {
         currentPage++;
         updateView();
+        // Scroll to top after the view updates
+        setTimeout(scrollToTop, 10);
       }
     });
 
@@ -142,6 +156,8 @@ const questions = quiz.data.questions.slice(0, 60);
       if (currentPage > 0) {
         currentPage--;
         updateView();
+        // Scroll to top after the view updates
+        setTimeout(scrollToTop, 10);
       }
     });
 
