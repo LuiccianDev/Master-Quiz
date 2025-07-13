@@ -1,0 +1,10 @@
+---
+interface Props {
+  children: any;
+  className?: string;
+}
+const { children, className = "" } = Astro.props;
+---
+<div class={`bg-white rounded-xl shadow p-6 ${className}`}>
+  {children}
+</div>
