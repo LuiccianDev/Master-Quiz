@@ -4,7 +4,7 @@ description: "Identificación y clasificación de minerales. Propiedades física
 tema: "Maquinaria"
 nivel: "Básico"
 duracion: "6 semanas"
-imagen: "/images/maquinaria.jpg"
+imagen: "/img/MaquinariaMinera.webp"
 color: "bg-red-500"
 quizzes: 12
 enlace: "/quiz/maquinaria"

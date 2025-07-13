@@ -4,7 +4,7 @@ description: "Estudio de las rocas ígneas, sedimentarias y metamórficas. Apren
 tema: "Geología"
 nivel: "Intermedio"
 duracion: "6 semanas"
-imagen: "/images/petrologia.jpg"
+imagen: "/img/Petrologia.webp"
 color: "bg-emerald-500"
 quizzes: 50
 enlace: "/quiz/petrologia"

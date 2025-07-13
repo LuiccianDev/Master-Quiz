@@ -4,7 +4,7 @@ description: "Identificación y clasificación de minerales. Propiedades física
 tema: "Geología"
 nivel: "Básico"
 duracion: "6 semanas"
-imagen: "/images/mineralogia.jpg"
+imagen: "/img/Mineralogia.webp"
 color: "bg-blue-500"
 quizzes: 12
 enlace: "/quiz/mineralogia"
