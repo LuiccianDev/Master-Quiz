@@ -2,9 +2,62 @@
 interface Props {
   children: any;
   className?: string;
+  variant?: 'default' | 'bordered' | 'elevated' | 'ghost';
+  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  hoverEffect?: 'none' | 'scale' | 'shadow' | 'glow';
 }
-const { children, className = "" } = Astro.props;
+
+const { 
+  children, 
+  className = "",
+  variant = 'default',
+  padding = 'md',
+  rounded = 'xl',
+  hoverEffect = 'none'
+} = Astro.props;
+
+const variants = {
+  default: 'bg-navi/50 backdrop-blur-sm',
+  bordered: 'bg-navi/30 border border-white/10',
+  elevated: 'bg-navi/50 shadow-lg',
+  ghost: 'bg-transparent hover:bg-navi/20 transition-colors'
+};
+
+const paddings = {
+  none: '',
+  sm: 'p-3',
+  md: 'p-6',
+  lg: 'p-8',
+  xl: 'p-10'
+};
+
+const roundness = {
+  none: 'rounded-none',
+  sm: 'rounded-lg',
+  md: 'rounded-xl',
+  lg: 'rounded-2xl',
+  xl: 'rounded-3xl',
+  full: 'rounded-full'
+};
+
+const hoverEffects = {
+  none: '',
+  scale: 'hover:scale-[1.02] transition-transform',
+  shadow: 'hover:shadow-lg transition-shadow',
+  glow: 'hover:shadow-[0_0_20px_rgba(255,165,0,0.2)] transition-shadow'
+};
+
+const cardClasses = [
+  variants[variant],
+  paddings[padding],
+  roundness[rounded],
+  hoverEffect !== 'none' ? hoverEffects[hoverEffect] : '',
+  'transition-all duration-200',
+  className
+].filter(Boolean).join(' ');
 ---
-<div class={`bg-white rounded-xl shadow p-6 ${className}`}>
+<div class={cardClasses}>
+  <slot />
   {children}
 </div>
