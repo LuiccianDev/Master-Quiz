@@ -1,10 +1,26 @@
-# Quiz Master - Plataforma de Aprendizaje Interactivo
+<div align="center">
+  <h1>Quiz Master Project</h1>
+  
+  <p>
+    <em>Plataforma de aprendizaje interactivo con cuestionarios y cursos para una experiencia educativa inmersiva.</em>
+  </p>
 
-![Quiz Master Logo](public/logo.svg)
+  [![Astro](https://img.shields.io/badge/Astro-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+  [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+  [![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)](https://nodejs.org/)
+  [![pnpm](https://img.shields.io/badge/pnpm-F69220?logo=pnpm&logoColor=white)](https://pnpm.io/)
+</div>
 
-Quiz Master es una plataforma de aprendizaje interactivo construida con Astro, diseñada para ofrecer una experiencia de aprendizaje atractiva a través de cuestionarios y cursos interactivos.
+## Vista Previa del Proyecto
 
-## 🚀 Características Principales
+<div align="center">
+  <img src="src/assets/ResultProyect.png" alt="Vista Previa de Quiz Master" width="800">
+  <p><em>Interfaz principal de Quiz Master mostrando el dashboard de aprendizaje</em></p>
+</div>
+
+## Características Principales
 
 - **Sistema de Cuestionarios Interactivos**: Crea y responde cuestionarios sobre diversos temas.
 - **Cursos Estructurados**: Accede a cursos organizados por categorías y niveles.
@@ -12,59 +28,23 @@ Quiz Master es una plataforma de aprendizaje interactivo construida con Astro, d
 - **Diseño Responsivo**: Funciona perfectamente en dispositivos móviles y de escritorio.
 - **Autenticación de Usuarios**: Sistema de registro e inicio de sesión para guardar tu progreso.
 
-## 🏗️ Estructura del Proyecto
 
-```
-/
-├── public/                 # Archivos estáticos
-├── src/
-│   ├── assets/            # Recursos estáticos
-│   ├── components/        # Componentes reutilizables
-│   │   ├── Button.astro   # Botones personalizados
-│   │   ├── Card.astro     # Tarjetas de contenido
-│   │   ├── Modal.astro    # Ventanas modales
-│   │   └── ProgressBar.astro # Barras de progreso
-│   ├── content/           # Contenido de la aplicación
-│   │   ├── courses/       # Cursos
-│   │   └── quizzes/       # Cuestionarios
-│   ├── layouts/           # Plantillas de diseño
-│   │   ├── BaseLayout.astro
-│   │   ├── Footer.astro
-│   │   ├── Header.astro
-│   │   └── Layout.astro
-│   └── pages/             # Rutas de la aplicación
-│       ├── courses/       # Páginas de cursos
-│       ├── quiz/          # Páginas de cuestionarios
-│       ├── dashboard.astro # Panel de control
-│       ├── profile.astro  # Perfil de usuario
-│       └── ...
-└── package.json           # Dependencias y scripts
-```
-
-## 🛠️ Comandos Útiles
-
-| Comando            | Descripción                                   |
-|-------------------|-----------------------------------------------|
-| `pnpm install`    | Instalar dependencias                         |
-| `pnpm dev`        | Iniciar servidor de desarrollo local          |
-| `pnpm build`      | Construir versión de producción               |
-| `pnpm preview`    | Previsualizar compilación localmente          |
-| `pnpm astro ...`  | Comandos de la CLI de Astro                   |
-
-## 🚀 Cómo Empezar
+## Cómo Empezar
 
 1. Clona el repositorio
 2. Instala las dependencias: `pnpm install`
 3. Inicia el servidor de desarrollo: `pnpm dev`
 4. Abre [http://localhost:4321](http://localhost:4321) en tu navegador
 
-## 📚 Tecnologías Utilizadas
 
-- [Astro](https://astro.build/) - Framework web todo en uno
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
-- [TypeScript](https://www.typescriptlang.org/) - Tipado estático
-- [Lucide Icons](https://lucide.dev/) - Iconos
+## Contribución
 
-## 📄 Licencia
+Si deseas contribuir al proyecto, por favor, sigue estos pasos:
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+1. Fork el repositorio
+2. Crea una rama para tu contribución
+3. Realiza los cambios y crea una pull request
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
