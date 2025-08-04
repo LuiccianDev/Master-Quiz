@@ -1,0 +1,24 @@
+---
+import { features } from '@/const/home.const';
+---
+
+
+<section id="features" class="relative z-10 py-16 bg-navi/50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">
+        <span class="bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent">
+          Por qué elegirnos
+        </span>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {features.map((feature, index) => (
+          <div class="card hover:translate-y-[-5px] transition-transform duration-300">
+            <div class="text-4xl mb-4">{feature.icon}</div>
+            <h3 class="text-xl font-bold text-White mb-2">{feature.title}</h3>
+            <p class="text-White/70">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>

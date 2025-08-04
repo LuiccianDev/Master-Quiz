@@ -7,5 +7,5 @@ duracion: "5 semanas"
 imagen: "/img/RMR.webp"
 color: "bg-Orange"
 quizzes: 15
-enlace: "/quiz/rmr"
+enlace: "/quiz/resistencia-del-macizo-rocoso"
 ---

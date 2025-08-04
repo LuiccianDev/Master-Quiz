@@ -1,5 +1,5 @@
 ---
-title: "rmr"
+title: "Resistencia del Macizo Rocoso"
 questions:
   - question: "¿Qué característica textural es distintiva de las rocas multiminerales metamorfizadas, producto de la reorientación de cristales debido a esfuerzos diferenciales?"
     options:

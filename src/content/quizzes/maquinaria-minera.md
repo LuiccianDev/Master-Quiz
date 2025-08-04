@@ -1,5 +1,5 @@
 ---
-title: "Maquinaria"
+title: "Maquinaria Minera"
 questions:
   - question: "¿Qué tipo de maquinaria se utiliza para extraer minerales de la roca?"
     options:

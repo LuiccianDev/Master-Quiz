@@ -1,94 +1,20 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { features, links } from '../const/home.const';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/sections/HeroSection.astro';
+import FeaturesGridSection from '@/components/sections/FeaturesGridSection.astro';
+import CTASection from '@/components/sections/CTASection.astro';
 ---
 
 <BaseLayout 
   title="Inicio | QuizMaster"
   description="Plataforma educativa para aprender y mejorar tus conocimientos a través de cuestionarios interactivos."
-  className="relative bg-navi"
+  className="relative bg-navi flex-1 w-full"
   fullWidth={true}
 >
-  <!-- Main Content Container -->
-  <div class="flex-1 w-full">
-  <!-- Hero Section -->
-  <section class="relative z-10 py-16 md:py-24 text-center">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl md:text-6xl font-bold mb-6">
-        <span class="bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent">
-          Domina nuevos conocimientos
-        </span>
-      </h1>
-      <p class="text-xl md:text-2xl text-White/90 mb-10 max-w-3xl mx-auto">
-        Aprende, practica y mejora con nuestra plataforma educativa interactiva
-      </p>
-      
-      <div class="flex flex-col sm:flex-row justify-center gap-4 mt-12">
-        <a 
-          href="/register" 
-          class="btn btn-primary px-8 py-4 text-lg font-semibold"
-        >
-          Comenzar ahora
-        </a>
-        <a 
-          href="#features" 
-          class="btn btn-secondary px-8 py-4 text-lg font-semibold"
-        >
-          Conoce más
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Grid -->
-  <section id="features" class="relative z-10 py-16 bg-navi/50 backdrop-blur-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold text-center mb-12">
-        <span class="bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent">
-          Por qué elegirnos
-        </span>
-      </h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {features.map((feature, index) => (
-          <div class="card hover:translate-y-[-5px] transition-transform duration-300">
-            <div class="text-4xl mb-4">{feature.icon}</div>
-            <h3 class="text-xl font-bold text-White mb-2">{feature.title}</h3>
-            <p class="text-White/70">{feature.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="py-20 text-center">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-bold mb-6">
-        <span class="bg-gradient-to-r from-Orange to-Accent bg-clip-text text-transparent">
-          ¿Listo para comenzar?
-        </span>
-      </h2>
-      <p class="text-xl text-White/90 mb-10 max-w-2xl mx-auto">
-        Elige una opción para comenzar tu viaje de aprendizaje
-      </p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        {links.map(({ href, label, description, icon, gradient }) => (
-          <a 
-            href={href}
-            class={`group relative p-6 rounded-xl bg-gradient-to-br ${gradient} hover:shadow-lg hover:shadow-${gradient.split(' ')[0]}/30 transition-all duration-300 transform hover:-translate-y-1`}
-          >
-            <div class="absolute top-4 right-4 text-3xl opacity-20 group-hover:opacity-30 transition-opacity">
-              {icon}
-            </div>
-            <h3 class="text-xl font-bold text-White mb-2">{label}</h3>
-            <p class="text-White/90">{description}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-  </div> <!-- Cierre del contenedor principal -->
-  <div class="h-16"></div> <!-- Espacio adicional para el footer -->
+    <!-- Hero Section -->
+    <HeroSection />
+    <!-- Features Grid -->
+    <FeaturesGridSection />
+    <!-- CTA Section -->
+    <CTASection />
 </BaseLayout>
